@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build outputs (gerados no Docker)
+dist/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Env files (configurar via Docker/EasyPanel)
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests
+coverage/
+.angular/
+
+# Misc
+README.md
+*.md

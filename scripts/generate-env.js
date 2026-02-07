@@ -97,12 +97,12 @@ function generateConfigCss(config) {
 
 // Iniciar servidor
 function startServer() {
-  // O Angular com builder 'application' gera em dist/form-red-balloon/browser
-  const distRoot = path.join(__dirname, '../dist/form-red-balloon');
+  // O Angular com builder 'application' gera em dist/frontend-red-balloon/browser/browser
+  const distRoot = path.join(__dirname, '../dist/frontend-red-balloon/browser');
   const browserDir = path.join(distRoot, 'browser');
 
   if (!fs.existsSync(browserDir)) {
-    console.error('❌ Erro: Diretório dist/form-red-balloon/browser não encontrado!');
+    console.error('❌ Erro: Diretório dist/frontend-red-balloon/browser/browser não encontrado!');
     console.error('Execute primeiro: npm run build');
     process.exit(1);
   }
