@@ -1,0 +1,8 @@
+{
+  "apiUrl": "http://localhost:4500",
+  "apiUrlForms": "http://localhost:3000/api/forms",
+  "siteKey": "6LdLG4grAAAAAAoH5jvawTvnd4sVSNK3ZSOIsBaL",
+  "secretKey": "",
+  "logoUrl": "Logo - RedBalloon.webp",
+  "environment": "development"
+}

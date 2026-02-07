@@ -30,7 +30,7 @@ function generateConfigJson() {
   const config = {
     apiUrl: cleanEnvValue(process.env.API_URL) || '',
     apiUrlForms: cleanEnvValue(process.env.API_URL_FORMS) || '',
-    siteKey: cleanEnvValue(process.env.SITE_KEY) || '',
+    siteKey: cleanEnvValue(process.env.SITE_KEY) || '6LdLG4grAAAAAAoH5jvawTvnd4sVSNK3ZSOIsBaL',
     secretKey: cleanEnvValue(process.env.SECRET_KEY) || '',
     logoUrl: cleanEnvValue(process.env.LOGO_URL) || 'Logo - RedBalloon.webp',
     environment: cleanEnvValue(process.env.ENVIRONMENT) || 'production',

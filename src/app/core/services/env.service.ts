@@ -17,7 +17,7 @@ export class EnvService {
   private config: EnvConfig = {
     apiUrl: '',
     apiUrlForms: '',
-    siteKey: '',
+    siteKey: '6LdLG4grAAAAAAoH5jvawTvnd4sVSNK3ZSOIsBaL',
     secretKey: '',
     logoUrl: ''
   };
