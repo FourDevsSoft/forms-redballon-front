@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="header">
+      <div class="icon-wrapper">
+        <span class="logo-contain-1"><img src="Logo - RedBalloon.webp" alt=""></span>
+      </div>
+  
+      <h1>Portal de Cadastro</h1>
+      <p>Escolha uma das opções.</p>
+    </div>
+  
+    <div class="cards">
+      <div class="card" (click)="irParaCadastroAluno()">
+        <div class="card-icon">
+          <span class="material-icons"><i class="bi bi-people"></i></span>
+        </div>
+  
+        <div class="card-text" routerLink="/form">
+          <h2>Cadastrar Aluno e Responsáveis</h2>
+          <p>Registre um novo aluno com seus responsáveis de uma vez.</p>
+        </div>
+      </div>
+  
+      <div class="card" (click)="irParaCadastroResponsavel()">
+        <div class="card-icon">
+          <span class="material-icons"><i class="bi bi-person-plus"></i></span>
+        </div>
+  
+        <div class="card-text">
+          <h2>Cadastrar Novo Responsável</h2>
+          <p>Adicione um responsável a um aluno já existente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
