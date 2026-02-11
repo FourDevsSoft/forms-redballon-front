@@ -13,7 +13,7 @@ export class TelaInicialComponent {
   }
 
   irParaCadastroResponsavel() {
-    console.log('Cadastro de responsável');
+    this.router.navigate(['/novo-responsavel']);
     // futuramente: this.router.navigate(['/responsavel']);
   }
 }
