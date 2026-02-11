@@ -1,0 +1,84 @@
+<section class="container-form">
+
+    <!-- BUSCAR ALUNO -->
+    <div class="card">
+      <h3 class="titulo">Buscar Alunos</h3>
+      <p class="descricao">
+        Digite o nome do aluno para encontrá-lo e vinculá-lo ao novo responsável.
+      </p>
+  
+      <div class="busca-aluno">
+        <input
+          type="text"
+          placeholder="Nome do aluno..."
+          [(ngModel)]="nomeAluno"
+          (ngModelChange)="onNomeAlunoChange($event)"
+        />
+        <button>
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+  
+      <!-- AUTOCOMPLETE -->
+      <div class="lista-autocomplete" *ngIf="alunosEncontrados.length">
+        <div
+          class="item-aluno"
+          *ngFor="let aluno of alunosEncontrados"
+          (click)="selecionarAluno(aluno)"
+        >
+          <img [src]="aluno.foto_url" />
+          <div>
+            <strong>{{ aluno.nome }}</strong>
+            <small>Turma: {{ aluno.turma_nome }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- DADOS DO RESPONSÁVEL -->
+    <div class="card">
+      <h3 class="titulo">Dados do Responsável</h3>
+  
+      <label>Nome Completo *</label>
+      <input type="text" [(ngModel)]="responsavel.nome" />
+  
+      <label>CPF *</label>
+      <input
+        type="text"
+        maxlength="14"
+        [(ngModel)]="responsavel.cpf"
+        (input)="formatarCPF($event)"
+      />
+  
+      <label>Telefone</label>
+      <input
+        type="text"
+        [(ngModel)]="responsavel.telefone"
+        (input)="formatarTelefone($event)"
+      />
+  
+      <label>Relação com o Aluno *</label>
+      <input type="text" placeholder="Ex: Mãe, Pai" [(ngModel)]="responsavel.relacao" />
+  
+      <div class="toggle">
+        <span>Responsável Principal?</span>
+        <input type="checkbox" [(ngModel)]="responsavel.principal" />
+      </div>
+  
+      <div class="upload">
+        <label class="btn-upload">
+          <i class="bi bi-upload"></i> Adicionar foto
+          <input type="file" hidden (change)="onFotoResponsavelSelecionada($event)" />
+        </label>
+  
+        <img *ngIf="previewFotoResponsavel" [src]="previewFotoResponsavel" />
+
+      </div>
+    </div>
+  
+  </section>
+  
+  <button class="btn-final" (click)="salvarResponsavel()">
+    Cadastrar Responsável
+  </button>
+  
