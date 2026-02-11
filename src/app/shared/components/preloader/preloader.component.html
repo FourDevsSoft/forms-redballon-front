@@ -1,0 +1,11 @@
+<div
+  class="preloader-container"
+  [ngClass]="{
+    'show': loading$ | async,
+    'hide': !(loading$ | async),
+    'requisicao': (loading$ | async) && (preloaderColor$ | async) === 'requisicao'
+  }"
+>
+  <div class="gif"><img  src="balao.svg" alt=""></div>
+  <div class="spinner"></div>
+</div>
