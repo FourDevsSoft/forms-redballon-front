@@ -1,0 +1,8 @@
+.alert-ambiente-dev{
+    position: fixed;
+    top: 0;
+    right: 0;
+    font-size: 0.6rem;
+    background-color: rgb(243, 180, 63);
+    padding: 0.3%;
+}
