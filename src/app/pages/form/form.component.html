@@ -1,1 +1,220 @@
-<p>form works!</p>
+<app-alert></app-alert>
+
+<app-confirm-pop-up
+  [visible]="popupVisivel"
+  [message]="popupMensagem"
+  (confirm)="confirmarRemocao()"
+  (cancel)="cancelarRemocao()">
+</app-confirm-pop-up>
+
+<app-confirm-pop-up
+  [visible]="popupIrmaoVisivel"
+  message="ALUNO CADASTRADO! Esse aluno tem irmão? Deseja cadastrar outro? iremos manter os dados dos responsáveis."
+  (confirm)="confirmarCadastroIrmao()"
+  (cancel)="cancelarCadastroIrmao()">
+</app-confirm-pop-up>
+
+<section id="form">
+
+  <!-- FORM FINALIZADO -->
+  <div *ngIf="endForm" class="form-enviado">
+    <i class="bi bi-check-circle"></i>
+    <h2>Formulário Enviado</h2>
+  </div>
+
+  <!-- ===================== DADOS DO ALUNO ===================== -->
+  <div class="dados-alunos" *ngIf="!endForm">
+    <p><b>Obs:</b> Preencha com Atenção!</p>
+    <h2 class="titulo-principal">Informações do Aluno</h2>
+
+    <!-- AUTOCOMPLETE -->
+    <div class="dado autocomplete">
+      <label>Nome Completo do Aluno <span class="obrigatorio">*</span></label>
+
+      <input
+        class="formatecaoInput"
+        type="text"
+        placeholder="Digite o nome completo do aluno"
+        [ngModel]="nomeAluno"
+        (ngModelChange)="onNomeAlunoChange($event)"
+      />
+
+      <!-- LISTA AUTOCOMPLETE (COM FOTO + TURMA) -->
+      <div class="lista-autocomplete" *ngIf="alunosEncontrados.length > 0">
+        <div
+          class="item-aluno"
+          *ngFor="let aluno of alunosEncontrados"
+          (click)="selecionarAluno(aluno)"
+        >
+          <!-- FOTO -->
+          <img
+            class="foto-aluno"
+            [src]="aluno.foto_url"
+            alt="Foto do aluno"
+          />
+
+          <!-- INFO -->
+          <div class="aluno-info">
+            <span class="aluno-nome">{{ aluno.nome }}</span>
+            <small class="aluno-turma">
+              Turma: {{ aluno.turma_nome }}
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TURMA -->
+    <div class="dado">
+      <label>Turma do Aluno <span class="obrigatorio">*</span></label>
+      <select [(ngModel)]="idTurma" class="formatecaoInput">
+        <option [ngValue]="null" disabled>Selecione...</option>
+        <option *ngFor="let turma of turmas" [ngValue]="turma.id">
+          {{ turma.nome }}
+        </option>
+      </select>
+    </div>
+
+    <!-- FOTO DO ALUNO -->
+    <div class="card-imagem">
+      <h4>Foto do Aluno <span class="obrigatorio">*</span></h4>
+
+      <!-- Upload -->
+      <div class="upload-container" *ngIf="!fotoAluno && !fotoAlunoUrl">
+        <input
+          id="input-img-aluno"
+          type="file"
+          accept="image/*"
+          (change)="onFotoAlunoSelecionada($event)"
+        />
+
+        <label class="btn-upload-img" for="input-img-aluno">
+          <i class="bi bi-upload"></i>
+          <span>Adicionar foto de {{ nomeAluno || 'Aluno' }}</span>
+        </label>
+      </div>
+
+      <!-- Foto da API -->
+      <img
+        *ngIf="!fotoAluno && fotoAlunoUrl"
+        [src]="fotoAlunoUrl"
+        class="img-form"
+        alt="Foto do aluno"
+      />
+
+      <!-- Foto nova -->
+      <img
+        *ngIf="fotoAluno"
+        [src]="getPreviewUrl(fotoAluno)"
+        class="img-form"
+        alt="Foto do aluno"
+      />
+    </div>
+  </div>
+
+  <!-- ===================== RESPONSÁVEIS ===================== -->
+  <div class="dados-responsaveis" *ngIf="!endForm">
+    <h2 class="titulo-principal">Pessoas Responsáveis</h2>
+
+    <div
+      *ngFor="let responsavel of responsaveis; let i = index"
+      class="card-responsavel"
+    >
+      <div class="card-titulo-responsavel" (click)="toggleResponsavel(i)">
+        <h4 class="titulo-reponsavel">Responsável #{{ i + 1 }}</h4>
+        <div class="icons">
+          <i class="bi" [ngClass]="responsavel.expandido ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+          <i
+            class="bi bi-trash3"
+            (click)="removerResponsavel(i); $event.stopPropagation()"
+          ></i>
+        </div>
+      </div>
+
+      <div class="conteudo-responsavel" [class.minimizado]="!responsavel.expandido">
+        <div class="dado">
+          <label>Nome Completo <span class="obrigatorio">*</span></label>
+          <input
+            class="formatecaoInput"
+            type="text"
+            placeholder="Nome do responsável"
+            [(ngModel)]="responsavel.nome"
+          />
+        </div>
+
+        <div class="row-flex">
+          <div class="dado dado-curto">
+            <label>CPF <span class="obrigatorio">*</span></label>
+            <input
+              class="formatecaoInput"
+              type="text"
+              placeholder="000.000.000-00"
+              maxlength="14"
+              [(ngModel)]="responsavel.cpf"
+              (input)="formatarCPF($event, i)"
+            />
+          </div>
+
+          <div class="dado dado-curto">
+            <label>Telefone</label>
+            <input
+              class="formatecaoInput"
+              type="text"
+              placeholder="(81) 9 0000-0000"
+              [(ngModel)]="responsavel.telefone"
+              (input)="formatarTelefone($event, i)"
+            />
+          </div>
+        </div>
+
+        <div class="dado">
+          <label>Relação com o Aluno <span class="obrigatorio">*</span></label>
+          <input
+            class="formatecaoInput"
+            type="text"
+            placeholder="Ex: Mãe, Pai"
+            [(ngModel)]="responsavel.relacao"
+          />
+        </div>
+
+        <div class="card-imagem">
+          <h4>Foto do Responsável <span class="obrigatorio">*</span></h4>
+
+          <input
+            class="inputImg"
+            id="input-img-responsavel_{{ i }}"
+            type="file"
+            accept="image/*"
+            (change)="onFotoResponsavelSelecionada($event, i)"
+          />
+
+          <label
+            class="btn-upload-img"
+            for="input-img-responsavel_{{ i }}"
+            *ngIf="!responsavel.foto"
+          >
+            <i class="bi bi-upload"></i>
+            <span>Adicionar foto de {{ responsavel.nome || 'Responsável' }}</span>
+          </label>
+
+          <img
+            *ngIf="responsavel.foto"
+            [src]="getPreviewUrl(responsavel.foto)"
+            class="img-form"
+          />
+        </div>
+      </div>
+    </div>
+
+    <button class="add-responsavel" (click)="adicionarResponsavel()">
+      <i class="bi bi-plus"></i> Adicionar Responsável
+    </button>
+  </div>
+</section>
+
+<!-- BOTÃO FINAL -->
+<div class="btn-confirmar" *ngIf="!endForm">
+  <button id="enviar-form" (click)="enviarFormulario()">
+    Enviar Inscrição
+  </button>
+</div>
