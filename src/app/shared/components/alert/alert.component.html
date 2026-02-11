@@ -1,0 +1,8 @@
+<div
+  class="alert"
+  [ngClass]="alertService.tipo$ | async"
+  *ngIf="alertService.visivel$ | async"
+>
+  <span class="alert-message">{{ alertService.mensagem$ | async }}</span>
+  <button class="close-btn" (click)="alertService.fechar()">×</button>
+</div>
