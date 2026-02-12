@@ -20,16 +20,15 @@ function cleanEnvValue(value) {
 // Gerar config.json dinamicamente
 function generateConfigJson() {
   // Debug: mostrar todas as variáveis de ambiente
-  // console.log('\n🔍 DEBUG - Variáveis de Ambiente Lidas:');
-  // console.log('   API_URL (process.env):', process.env.API_URL);
-  // console.log('   SITE_KEY (process.env):', process.env.SITE_KEY);
-  // console.log('   LOGO_URL (process.env):', process.env.LOGO_URL);
-  // console.log('   COR_4 (process.env):', process.env.COR_4);
-  // console.log('   COR_5 (process.env):', process.env.COR_5);
+  console.log('\n🔍 DEBUG - Variáveis de Ambiente Lidas:');
+  console.log('   API_URL (process.env):', process.env.API_URL || '(não definida)');
+  console.log('   API_URL_FORMS (process.env):', process.env.API_URL_FORMS || '(não definida)');
+  console.log('   SITE_KEY (process.env):', process.env.SITE_KEY || '(não definida)');
+  console.log('   LOGO_URL (process.env):', process.env.LOGO_URL || '(não definida)');
   
   const config = {
-    apiUrl: cleanEnvValue(process.env.API_URL) || 'localhost:4500',
-    apiUrlForms: cleanEnvValue(process.env.API_URL_FORMS) || '',
+    apiUrl: cleanEnvValue(process.env.API_URL) || 'http://localhost:4500',
+    apiUrlForms: cleanEnvValue(process.env.API_URL_FORMS) || 'http://localhost:3000/api/forms',
     siteKey: cleanEnvValue(process.env.SITE_KEY) || '6LdLG4grAAAAAAoH5jvawTvnd4sVSNK3ZSOIsBaL',
     secretKey: cleanEnvValue(process.env.SECRET_KEY) || '',
     logoUrl: cleanEnvValue(process.env.LOGO_URL) || 'Logo - RedBalloon.webp',
@@ -46,14 +45,13 @@ function generateConfigJson() {
   }
 
 
-  // console.log('\n📋 Configurações Finais:');
-  // console.log('   API_URL:', config.apiUrl || '(vazio)');
-  // console.log('   SITE_KEY:', config.siteKey || '(vazio)');
-  // console.log('   LOGO_URL:', config.logoUrl || '(vazio)');
-  // console.log('   COR_4 (config):', config.cor4);
-  // console.log('   COR_5 (config):', config.cor5);
-  // console.log('   ENVIRONMENT:', config.environment);
-  // console.log('');
+  console.log('\n📋 Configurações Finais Geradas:');
+  console.log('   apiUrl:', config.apiUrl);
+  console.log('   apiUrlForms:', config.apiUrlForms);
+  console.log('   siteKey:', config.siteKey);
+  console.log('   logoUrl:', config.logoUrl);
+  console.log('   environment:', config.environment);
+  console.log('');
 
   return config;
 }

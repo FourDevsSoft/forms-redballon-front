@@ -30,26 +30,44 @@ export class EnvService {
 
   private async loadConfig(): Promise<void> {
     try {
+      console.log('🔄 EnvService: Iniciando carregamento de configurações...');
+      
       // Primeiro: usar config pré-carregado em window.__config (carregado em main.ts)
       let configData: EnvConfig | undefined = (window as any).__config as EnvConfig | undefined;
       if (!configData) {
+        console.log('⚠️ EnvService: window.__config não encontrado, buscando /config.json...');
         // Fallback: buscar via fetch
         const resp = await fetch('/config.json', { cache: 'no-cache' });
         if (!resp.ok) {
           throw new Error(`Falha ao buscar config.json: ${resp.status}`);
         }
         configData = await resp.json() as EnvConfig;
+        console.log('✅ EnvService: config.json carregado via fetch');
+      } else {
+        console.log('✅ EnvService: Usando window.__config');
       }
+
+      console.log('📋 EnvService: Dados recebidos:', {
+        apiUrl: configData.apiUrl,
+        apiUrlForms: configData.apiUrlForms,
+        environment: configData.environment
+      });
 
       // Merge com valores padrão, sem sobrescrever
       this.config = {
-        apiUrl: configData.apiUrl || '',
-        apiUrlForms: configData.apiUrlForms || '',
-        siteKey: configData.siteKey || '',
-        secretKey: configData.secretKey || '',
+        apiUrl: configData.apiUrl || this.config.apiUrl,
+        apiUrlForms: configData.apiUrlForms || this.config.apiUrlForms,
+        siteKey: configData.siteKey || this.config.siteKey,
+        secretKey: configData.secretKey || this.config.secretKey,
         logoUrl: configData.logoUrl || 'Logo - RedBalloon.webp',
         environment: configData.environment || 'production'
       };
+
+      console.log('✅ EnvService: Configuração final carregada:', {
+        apiUrl: this.config.apiUrl,
+        apiUrlForms: this.config.apiUrlForms,
+        environment: this.config.environment
+      });
 
       // Adicionar todas as cores adicionais (cor1-cor48)
       for (let i = 1; i <= 48; i++) {
