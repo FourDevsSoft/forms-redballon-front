@@ -144,10 +144,24 @@ npm install
 | Variável | Descrição | Padrão |
 |----------|-----------|--------|
 | `API_URL` | URL da API backend | `''` |
-| `PRIMARY_COLOR` | Cor primária (hex/rgb) | `#FF6B6B` |
-| `SECONDARY_COLOR` | Cor secundária | Usa PRIMARY_COLOR |
-| `ACCENT_COLOR` | Cor de destaque | Usa PRIMARY_COLOR |
+| `LOGO_URL` | Logo exibida no site (PNG, WEBP, SVG) | `Logo - RedBalloon.webp` |
+| `FAVICON_URL` | Ícone da aba (opcional, 32x32px) | Usa `LOGO_URL` |
+| `SITE_KEY` | Chave do reCAPTCHA | `''` |
 | `ENVIRONMENT` | production/development | `production` |
 | `PORT` | Porta do servidor | `8080` |
+| `COR_1` até `COR_50` | Cores do sistema (hex) | Veja `.env.example` |
+
+### 🖼️ Logo e Favicon
+
+**LOGO_URL**: Imagem grande para o cabeçalho do site
+- Pode ser qualquer tamanho e formato (PNG, WEBP, SVG, etc.)
+- Exemplo: `Logo - RedBalloon - letra branca.png`
+
+**FAVICON_URL** (opcional): Ícone pequeno para a aba do navegador
+- Recomendado: 32x32px ou 16x16px em .ico, .png ou .svg
+- Se não definido, usa a `LOGO_URL` (pode não ficar ideal)
+- Exemplo: `favicon.ico` ou `logo-icon-32x32.png`
+
+**Importante**: Coloque os arquivos na pasta `public/` antes do build.
 
 Sinta-se livre para adicionar mais variáveis conforme necessário!

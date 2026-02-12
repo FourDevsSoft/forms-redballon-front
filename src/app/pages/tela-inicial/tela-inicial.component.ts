@@ -21,11 +21,13 @@ export class TelaInicialComponent {
   carregando = false;
   mensagemErro = '';
   siteKey: string = '';
-  logoUrl: string = '';
 
   constructor(private router: Router, private formService: FormService, private globalService: GlobalService,) {
     this.siteKey = this.globalService.siteKey;
-    this.logoUrl = this.globalService.logoUrl;
+  }
+
+  get logoUrl(): string {
+    return this.globalService.logoUrl;
   }
 
   async ngAfterViewInit() {

@@ -5,6 +5,7 @@
   "secretKey": "",
   "logoUrl": "Logo - RedBalloon.webp",
   "faviconUrl": "Logo - RedBalloon.webp",
+  "_comment": "Para produção, use uma imagem específica para favicon, exemplo: faviconUrl: 'favicon-32x32.png'",
   "environment": "development",
   "cor1": "#fff",
   "cor2": "#f1f1f1",
