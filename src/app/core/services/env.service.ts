@@ -6,6 +6,7 @@ export interface EnvConfig {
   siteKey: string;
   secretKey: string;
   logoUrl: string;
+  faviconUrl?: string;
   environment?: string;
   [key: string]: any; // Para cores adicionais cor1-cor48
 }
@@ -19,7 +20,8 @@ export class EnvService {
     apiUrlForms: '',
     siteKey: '6LdLG4grAAAAAAoH5jvawTvnd4sVSNK3ZSOIsBaL',
     secretKey: '',
-    logoUrl: ''
+    logoUrl: '',
+    faviconUrl: ''
   };
 
   private configLoaded = false;
@@ -30,28 +32,16 @@ export class EnvService {
 
   private async loadConfig(): Promise<void> {
     try {
-      console.log('🔄 EnvService: Iniciando carregamento de configurações...');
-      
       // Primeiro: usar config pré-carregado em window.__config (carregado em main.ts)
       let configData: EnvConfig | undefined = (window as any).__config as EnvConfig | undefined;
       if (!configData) {
-        console.log('⚠️ EnvService: window.__config não encontrado, buscando /config.json...');
         // Fallback: buscar via fetch
         const resp = await fetch('/config.json', { cache: 'no-cache' });
         if (!resp.ok) {
           throw new Error(`Falha ao buscar config.json: ${resp.status}`);
         }
         configData = await resp.json() as EnvConfig;
-        console.log('✅ EnvService: config.json carregado via fetch');
-      } else {
-        console.log('✅ EnvService: Usando window.__config');
       }
-
-      console.log('📋 EnvService: Dados recebidos:', {
-        apiUrl: configData.apiUrl,
-        apiUrlForms: configData.apiUrlForms,
-        environment: configData.environment
-      });
 
       // Merge com valores padrão, sem sobrescrever
       this.config = {
@@ -60,14 +50,9 @@ export class EnvService {
         siteKey: configData.siteKey || this.config.siteKey,
         secretKey: configData.secretKey || this.config.secretKey,
         logoUrl: configData.logoUrl || 'Logo - RedBalloon.webp',
+        faviconUrl: configData.faviconUrl || configData.logoUrl || 'Logo - RedBalloon.webp',
         environment: configData.environment || 'production'
       };
-
-      console.log('✅ EnvService: Configuração final carregada:', {
-        apiUrl: this.config.apiUrl,
-        apiUrlForms: this.config.apiUrlForms,
-        environment: this.config.environment
-      });
 
       // Adicionar todas as cores adicionais (cor1-cor48)
       for (let i = 1; i <= 48; i++) {
@@ -80,7 +65,7 @@ export class EnvService {
       this.configLoaded = true;
     } catch (error) {
       this.configLoaded = true;
-      console.warn('⚠️ Erro ao carregar config.json', error);
+      // Erro ao carregar config.json - usa valores padrão
     }
   }
 
@@ -111,6 +96,10 @@ export class EnvService {
 
   get logoUrl(): string {
     return this.config.logoUrl;
+  }
+
+  get faviconUrl(): string {
+    return this.config.faviconUrl || this.config.logoUrl;
   }
 
   get environment(): string {
