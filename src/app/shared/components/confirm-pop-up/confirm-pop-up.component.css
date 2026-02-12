@@ -27,17 +27,18 @@
   }
   
   .btn-confirm {
-    border: 2px solid var(--cor-5) !important;
+    border: 2px solid var(--cor-9) !important;
     color:var(--cor-5);
     padding: 10px 15px;
+
     border: none;
     border-radius: 10px;
     cursor: pointer;
   }
   
   .btn-cancel {
-    background-color: var(--cor-5);
-    color: white;
+    background-color: var(--cor-9);
+    color: var(--cor-1);
     padding: 10px 15px;
     border: none;
     border-radius: 10px;

@@ -11,10 +11,10 @@ export const routes: Routes = [
   //DIRETOR ACESSA TUDO
   // Rotas protegidas pelo AuthGuard
   //{ path: 'dashboard', component: DashboardComponent,canActivate: [AuthGuard] },
-   { path: 'novo-responsavel', component: NovoResponsavelComponent},
-   { path: 'form', component: FormComponent},
-   {path: 'tela-inicial', component: TelaInicialComponent},
+   { path: 'edicao', component: NovoResponsavelComponent},
+   { path: 'cadastro', component: FormComponent},
+   {path: 'form', component: TelaInicialComponent},
 
   // Rota coringa para redirecionar caso o usuário tente acessar uma página inexistente
-  { path: '**', redirectTo: 'tela-inicial' }
+  { path: '**', redirectTo: 'form' }
 ];
