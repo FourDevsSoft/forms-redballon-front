@@ -28,9 +28,8 @@
   
   .btn-confirm {
     border: 2px solid var(--cor-9) !important;
-    color:var(--cor-5);
+    color:var(--cor-9);
     padding: 10px 15px;
-
     border: none;
     border-radius: 10px;
     cursor: pointer;
