@@ -146,6 +146,7 @@ npm install
 | `API_URL` | URL da API backend | `''` |
 | `LOGO_URL` | Logo exibida no site (PNG, WEBP, SVG) | `Logo - RedBalloon.webp` |
 | `FAVICON_URL` | Ícone da aba (opcional, 32x32px) | Usa `LOGO_URL` |
+| `BACKGROUND_IMAGE_URL` | URL da imagem/GIF de fundo do body | `https://img1.picmix.com/output/stamp/normal/5/9/6/8/648695_03eca.gif` |
 | `SITE_KEY` | Chave do reCAPTCHA | `''` |
 | `ENVIRONMENT` | production/development | `production` |
 | `PORT` | Porta do servidor | `8080` |
@@ -161,6 +162,15 @@ npm install
 - Recomendado: 32x32px ou 16x16px em .ico, .png ou .svg
 - Se não definido, usa a `LOGO_URL` (pode não ficar ideal)
 - Exemplo: `favicon.ico` ou `logo-icon-32x32.png`
+
+**BACKGROUND_IMAGE_URL** (opcional): Imagem ou GIF de fundo do body
+- Use URL completa (https://...) para recursos externos
+- Ou caminho relativo para arquivos locais na pasta `public/`
+- Ideal para temas sazonais (Natal, Carnaval, etc.)
+- Exemplos:
+  - Carnaval: `https://img1.picmix.com/output/stamp/normal/5/9/6/8/648695_03eca.gif`
+  - Natal: `https://i.gifer.com/5WWU.gif`
+- Se não definido, usa o GIF padrão de carnaval
 
 **Importante**: Coloque os arquivos na pasta `public/` antes do build.
 

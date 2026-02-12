@@ -138,7 +138,7 @@ loadRecaptcha(): Promise < void> {
       script.defer = true;
 
       script.onload = () => {
-        console.log('[RECAPTCHA] Script carregado com siteKey:', this.siteKey);
+        //console.log('[RECAPTCHA] Script carregado com siteKey:', this.siteKey);
         // Aguardar grecaptcha estar pronto
         const checkRecaptcha = setInterval(() => {
           if (typeof grecaptcha !== 'undefined') {

@@ -7,6 +7,7 @@ export interface EnvConfig {
   secretKey: string;
   logoUrl: string;
   faviconUrl?: string;
+  backgroundImageUrl?: string;
   environment?: string;
   [key: string]: any; // Para cores adicionais cor1-cor48
 }
@@ -21,7 +22,8 @@ export class EnvService {
     siteKey: '6LdLG4grAAAAAAoH5jvawTvnd4sVSNK3ZSOIsBaL',
     secretKey: '',
     logoUrl: '',
-    faviconUrl: ''
+    faviconUrl: '',
+    backgroundImageUrl: 'https://img1.picmix.com/output/stamp/normal/5/9/6/8/648695_03eca.gif'
   };
 
   private configLoaded = false;
@@ -51,6 +53,7 @@ export class EnvService {
         secretKey: configData.secretKey || this.config.secretKey,
         logoUrl: configData.logoUrl || 'Logo - RedBalloon.webp',
         faviconUrl: configData.faviconUrl || configData.logoUrl || 'Logo - RedBalloon.webp',
+        backgroundImageUrl: configData.backgroundImageUrl || this.config.backgroundImageUrl,
         environment: configData.environment || 'production'
       };
 
@@ -100,6 +103,10 @@ export class EnvService {
 
   get faviconUrl(): string {
     return this.config.faviconUrl || this.config.logoUrl;
+  }
+
+  get backgroundImageUrl(): string {
+    return this.config.backgroundImageUrl || 'https://img1.picmix.com/output/stamp/normal/5/9/6/8/648695_03eca.gif';
   }
 
   get environment(): string {

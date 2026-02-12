@@ -26,6 +26,7 @@ function generateConfigJson() {
     secretKey: cleanEnvValue(process.env.SECRET_KEY) || '',
     logoUrl: cleanEnvValue(process.env.LOGO_URL) || 'Logo - RedBalloon.webp',
     faviconUrl: cleanEnvValue(process.env.FAVICON_URL) || cleanEnvValue(process.env.LOGO_URL) || 'Logo - RedBalloon.webp',
+    backgroundImageUrl: cleanEnvValue(process.env.BACKGROUND_IMAGE_URL) || 'https://img1.picmix.com/output/stamp/normal/5/9/6/8/648695_03eca.gif',
     environment: cleanEnvValue(process.env.ENVIRONMENT) || 'production'
   };
 
@@ -50,6 +51,10 @@ function generateConfigCss(config) {
     if (config[key]) {
       css += `  --cor-${i}: ${config[key]};\n`;
     }
+  }
+  // Adicionar background image URL
+  if (config.backgroundImageUrl) {
+    css += `  --background-image-url: url('${config.backgroundImageUrl}');\n`;
   }
   css += '}\n';
   return css;
