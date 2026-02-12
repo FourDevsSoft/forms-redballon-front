@@ -33,11 +33,17 @@ function generateConfigJson() {
     siteKey: cleanEnvValue(process.env.SITE_KEY) || '6LdLG4grAAAAAAoH5jvawTvnd4sVSNK3ZSOIsBaL',
     secretKey: cleanEnvValue(process.env.SECRET_KEY) || '',
     logoUrl: cleanEnvValue(process.env.LOGO_URL) || 'Logo - RedBalloon.webp',
-    environment: cleanEnvValue(process.env.ENVIRONMENT) || 'production',
-    // Cores usadas no sistema (30 cores)
-    // cor1: cleanEnvValue(process.env.COR_1) || '#fff',
-
+    environment: cleanEnvValue(process.env.ENVIRONMENT) || 'production'
   };
+
+  // Adicionar todas as cores (COR_1 até COR_50)
+  for (let i = 1; i <= 50; i++) {
+    const envKey = `COR_${i}`;
+    const configKey = `cor${i}`;
+    if (process.env[envKey]) {
+      config[configKey] = cleanEnvValue(process.env[envKey]);
+    }
+  }
 
 
   // console.log('\n📋 Configurações Finais:');
@@ -55,9 +61,8 @@ function generateConfigJson() {
 // Gerar CSS dinâmico com as cores
 function generateConfigCss(config) {
   let css = ':root {\n';
-  // Apenas as cores que existem no config
-  const coresUsadas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 39, 44, 45, 47];
-  for (const i of coresUsadas) {
+  // Iterar por todas as cores possíveis (1-50)
+  for (let i = 1; i <= 50; i++) {
     const key = `cor${i}`;
     if (config[key]) {
       css += `  --cor-${i}: ${config[key]};\n`;

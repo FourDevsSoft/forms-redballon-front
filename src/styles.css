@@ -1,4 +1,13 @@
+/* 
+  NOTAS IMPORTANTES SOBRE AS CORES:
+  - As cores abaixo são valores de FALLBACK caso o config.css não carregue
+  - Para ALTERAR as cores do sistema, edite o arquivo .env na raiz do projeto
+  - As cores do .env sobrescreverão automaticamente estas definições
+  - Após alterar o .env, execute: npm run build && npm start
+*/
+
 :root {
+    /* Cores padrão (fallback) - Configuráveis via .env */
     --cor-1: #fff;
     --cor-2: #e11d48;
     --cor-3: #000000;
@@ -9,19 +18,19 @@
     --cor-8: #6b7280;
     --cor-9: #4F4ADC;
     --cor-10: #AEAEAE;
-    --cor-11:#D90525;
-     --cor-12:#BCBCBC;
-     --cor-13: #8E8E8E;
-     --cor-14: #d1d1d1;
-     --cor-15: #d80505;
-     --cor-16:#e0e0e0;
-     --cor-17:#ccc;
-     --cor-18:#f0f0f0;
-     --cor-19:#f8f9fa;
-     --cor-20: #333333;
-     --cor-21:#636363;
-     --cor-22: #4F4ADC;
-     --cor-23: #484848;
+    --cor-11: #D90525;
+    --cor-12: #BCBCBC;
+    --cor-13: #8E8E8E;
+    --cor-14: #d1d1d1;
+    --cor-15: #d80505;
+    --cor-16: #e0e0e0;
+    --cor-17: #ccc;
+    --cor-18: #f0f0f0;
+    --cor-19: #f8f9fa;
+    --cor-20: #333333;
+    --cor-21: #636363;
+    --cor-22: #4F4ADC;
+    --cor-23: #484848;
 }
 
 
@@ -173,7 +182,7 @@
   /* preloader circular */
   .spinner {
     border: 4px solid #f3f3f3;
-    border-top: 4px solid var(--cor-5);
+    border-top: 4px solid var(--cor-9);
     border-radius: 50%;
     width: 30px;
     height: 30px;
