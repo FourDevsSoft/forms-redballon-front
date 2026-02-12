@@ -28,4 +28,8 @@ export class GlobalService {
     // O siteKey vem do EnvService (dinâmico)
     console.warn('GlobalService.siteKey é somente leitura, vem de EnvService');
   }
+
+  get logoUrl(): string {
+    return this.envService.logoUrl;
+  }
 }
