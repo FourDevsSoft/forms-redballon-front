@@ -135,13 +135,11 @@ export class NovoResponsavelComponent implements OnInit, AfterViewInit {
     this.alunos[alunoIndex].editando = !this.alunos[alunoIndex].editando;
   }
 
-  atualizarTurmaAluno(alunoIndex: number, event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    const turmaId = parseInt(select.value);
+  atualizarTurmaAluno(alunoIndex: number): void {
+    const turmaId = this.alunos[alunoIndex].id_turma;
     const turma = this.turmas.find(t => t.id === turmaId);
     
     if (turma) {
-      this.alunos[alunoIndex].id_turma = turmaId;
       this.alunos[alunoIndex].turma_nome = turma.nome;
     }
   }

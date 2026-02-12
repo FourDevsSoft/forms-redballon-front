@@ -40,12 +40,12 @@
             <div class="form-group-inline">
               <label>Turma</label>
               <select 
-                [value]="aluno.id_turma" 
-                (change)="atualizarTurmaAluno(alunoIndex, $event)"
+                [(ngModel)]="aluno.id_turma" 
+                (ngModelChange)="atualizarTurmaAluno(alunoIndex)"
                 class="select-turma"
                 [disabled]="carregandoTurmas"
               >
-                <option value="" disabled>Selecione uma turma</option>
+                <option [value]="undefined" disabled>Selecione uma turma</option>
                 <option *ngFor="let turma of turmas" [value]="turma.id">
                   {{ turma.nome }}
                 </option>
