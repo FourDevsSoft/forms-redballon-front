@@ -20,6 +20,33 @@ export interface Responsavel {
   verificado?: boolean;
 }
 
+export interface NovoResponsavel {
+  nome: string;
+  cpf: string;
+  numero: string;
+  tipoVinculo: string;
+  foto?: File | null;
+}
+
+export interface CheckPrincipalResponse {
+  success: boolean;
+  message: string;
+  data: {
+    responsavel: {
+      id: number;
+      nome: string;
+      cpf: string;
+    };
+    alunos: {
+      id: number;
+      nome: string;
+      foto: string;
+      id_turma: number;
+      turma_nome: string;
+    }[];
+  };
+}
+
 
 export interface ApiResponsavelResponse {
   conteudoJson: {

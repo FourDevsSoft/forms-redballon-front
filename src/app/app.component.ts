@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { PreloaderComponent } from '../app/shared/components/preloader/preloader.component';
-import { ApiNotificacaoService } from './core/services/ApiNotificacao/ApiNotificacao.service';
 import { WebsocketService } from './core/services/websocket/websoket.service';
 import { GlobalService } from './core/services/global.service';
 import { Subscription } from 'rxjs';
@@ -28,21 +27,17 @@ export class AppComponent {
 
   constructor(
     private alertService: AlertService,
-    private notificacaoService: ApiNotificacaoService,
     private websocketService: WebsocketService,
     private globalService: GlobalService
   ) {
   }
 
   ngOnInit() {
-    const hostname = window.location.hostname;
 
-    if (hostname === 'gracashomologacao.outredballoon.com.br' || hostname === 'bvhomologacao.outredballoon.com.br') {
-      this.environmentLabel = 'HOMOLOGAÇÃO 🚨';
-    } else if (!environment.production) {
+    if (!environment.production) {
       this.environmentLabel = 'DESENVOLVIMENTO';
     } else {
-      this.environmentLabel = null; 
+      this.environmentLabel = null;
     }
   }
 }

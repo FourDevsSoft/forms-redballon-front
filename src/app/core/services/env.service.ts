@@ -15,7 +15,7 @@ export interface EnvConfig {
 })
 export class EnvService {
   private config: EnvConfig = {
-    apiUrl: '',
+    apiUrl: 'http://localhost:4500',
     apiUrlForms: '',
     siteKey: '6LdLG4grAAAAAAoH5jvawTvnd4sVSNK3ZSOIsBaL',
     secretKey: '',

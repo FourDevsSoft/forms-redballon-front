@@ -25,10 +25,63 @@
           <span class="material-icons"><i class="bi bi-person-plus"></i></span>
         </div>
   
-        <div class="card-text"  routerLink="/novo-responsavel">
+        <div class="card-text">
           <h2>Cadastrar Novo Responsável</h2>
           <p>Adicione um responsável a um aluno já existente.</p>
         </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal de Verificação -->
+  <div class="modal-overlay" *ngIf="mostrarModal" (click)="fecharModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Verificação do Responsável</h2>
+        <button class="btn-fechar" (click)="fecharModal()">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <p class="modal-descricao">Digite o(s) dados do responsável necessário para verificação.</p>
+        
+        <!-- <div class="form-group">
+          <label>Nome Completo *</label>
+          <input 
+            type="text" 
+            [(ngModel)]="nome" 
+            placeholder="Digite o nome completo"
+            [disabled]="carregando"
+          />
+        </div> -->
+        
+        <div class="form-group">
+          <label>CPF *</label>
+          <input 
+            type="text" 
+            [(ngModel)]="cpf" 
+            placeholder="000.000.000-00"
+            maxlength="14"
+            (input)="formatarCPF($event)"
+            [disabled]="carregando"
+          />
+        </div>
+        
+        <div class="mensagem-erro" *ngIf="mensagemErro">
+          <i class="bi bi-exclamation-circle"></i>
+          {{ mensagemErro }}
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button class="btn-cancelar" (click)="fecharModal()" [disabled]="carregando">
+          Cancelar
+        </button>
+        <button class="btn-verificar" (click)="verificarPrincipal()" [disabled]="carregando">
+          <span *ngIf="!carregando">Verificar</span>
+          <span *ngIf="carregando">Verificando...</span>
+        </button>
       </div>
     </div>
   </div>

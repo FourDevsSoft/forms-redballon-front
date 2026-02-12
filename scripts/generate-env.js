@@ -28,7 +28,7 @@ function generateConfigJson() {
   // console.log('   COR_5 (process.env):', process.env.COR_5);
   
   const config = {
-    apiUrl: cleanEnvValue(process.env.API_URL) || '',
+    apiUrl: cleanEnvValue(process.env.API_URL) || 'localhost:4500',
     apiUrlForms: cleanEnvValue(process.env.API_URL_FORMS) || '',
     siteKey: cleanEnvValue(process.env.SITE_KEY) || '6LdLG4grAAAAAAoH5jvawTvnd4sVSNK3ZSOIsBaL',
     secretKey: cleanEnvValue(process.env.SECRET_KEY) || '',

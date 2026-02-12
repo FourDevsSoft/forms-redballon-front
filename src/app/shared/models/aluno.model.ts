@@ -41,3 +41,15 @@ export interface ApiAlunosComResponsaveisResponse {
   conteudoJson: AlunoComResponsaveis[];
   success: boolean;
 }
+
+export interface AlunoParaEnvio {
+  id: number;
+  nome: string;
+  id_turma: number;
+  novosResponsaveis: {
+    nome: string;
+    cpf: string;
+    numero: string;
+    tipoVinculo: string;
+  }[];
+}

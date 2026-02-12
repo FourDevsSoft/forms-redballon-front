@@ -1,84 +1,171 @@
 <section class="container-form">
 
-    <!-- BUSCAR ALUNO -->
-    <div class="card">
-      <h3 class="titulo">Buscar Alunos</h3>
-      <p class="descricao">
-        Digite o nome do aluno para encontrá-lo e vinculá-lo ao novo responsável.
-      </p>
-  
-      <div class="busca-aluno">
-        <input
-          type="text"
-          placeholder="Nome do aluno..."
-          [(ngModel)]="nomeAluno"
-          (ngModelChange)="onNomeAlunoChange($event)"
-        />
-        <button>
-          <i class="bi bi-search"></i>
-        </button>
-      </div>
-  
-      <!-- AUTOCOMPLETE -->
-      <div class="lista-autocomplete" *ngIf="alunosEncontrados.length">
-        <div
-          class="item-aluno"
-          *ngFor="let aluno of alunosEncontrados"
-          (click)="selecionarAluno(aluno)"
-        >
-          <img [src]="aluno.foto_url" />
-          <div>
-            <strong>{{ aluno.nome }}</strong>
-            <small>Turma: {{ aluno.turma_nome }}</small>
+  <!-- FORM FINALIZADO -->
+  <div *ngIf="endForm" class="form-enviado">
+    <i class="bi bi-check-circle"></i>
+    <h2>Formulário Enviado</h2>
+  </div>
+
+  <!-- Informações do Responsável Principal -->
+  <div class="card" *ngIf="checkPrincipalData && !endForm">
+    <h3 class="titulo">Responsável Principal</h3>
+    <p class="descricao">
+      <strong>Nome:</strong> {{ checkPrincipalData.data.responsavel.nome }}<br>
+      <strong>CPF:</strong> {{ checkPrincipalData.data.responsavel.cpf }}
+    </p>
+  </div>
+
+  <!-- Mensagem de erro -->
+  <div class="alert alert-error" *ngIf="mensagemErro && !endForm">
+    {{ mensagemErro }}
+  </div>
+
+  <!-- Lista de Alunos -->
+  <div class="alunos-container" *ngIf="!endForm">
+    <div class="aluno-card" *ngFor="let aluno of alunos; let alunoIndex = index">
+      
+      <!-- Cabeçalho do Aluno -->
+      <div class="aluno-header">
+        <img [src]="aluno.foto" [alt]="aluno.nome" class="aluno-foto" />
+        <div class="aluno-info">
+          <div *ngIf="!aluno.editando">
+            <h4>{{ aluno.nome }}</h4>
+            <p>Turma: {{ aluno.turma_nome }}</p>
+          </div>
+          <div *ngIf="aluno.editando" class="aluno-edit-form">
+            <div class="form-group-inline">
+              <label>Nome do Aluno</label>
+              <input type="text" [(ngModel)]="aluno.nome" class="input-aluno" />
+            </div>
+            <div class="form-group-inline">
+              <label>Turma</label>
+              <select 
+                [value]="aluno.id_turma" 
+                (change)="atualizarTurmaAluno(alunoIndex, $event)"
+                class="select-turma"
+                [disabled]="carregandoTurmas"
+              >
+                <option value="" disabled>Selecione uma turma</option>
+                <option *ngFor="let turma of turmas" [value]="turma.id">
+                  {{ turma.nome }}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
+        <button 
+          class="btn-editar-aluno" 
+          (click)="toggleEditarAluno(alunoIndex)"
+          type="button"
+          [title]="aluno.editando ? 'Salvar' : 'Editar Aluno'"
+        >
+          <i [class]="aluno.editando ? 'bi bi-check-lg' : 'bi bi-pencil'"></i>
+        </button>
       </div>
-    </div>
-  
-    <!-- DADOS DO RESPONSÁVEL -->
-    <div class="card">
-      <h3 class="titulo">Dados do Responsável</h3>
-  
-      <label>Nome Completo *</label>
-      <input type="text" [(ngModel)]="responsavel.nome" />
-  
-      <label>CPF *</label>
-      <input
-        type="text"
-        maxlength="14"
-        [(ngModel)]="responsavel.cpf"
-        (input)="formatarCPF($event)"
-      />
-  
-      <label>Telefone</label>
-      <input
-        type="text"
-        [(ngModel)]="responsavel.telefone"
-        (input)="formatarTelefone($event)"
-      />
-  
-      <label>Relação com o Aluno *</label>
-      <input type="text" placeholder="Ex: Mãe, Pai" [(ngModel)]="responsavel.relacao" />
-  
-      <div class="toggle">
-        <span>Responsável Principal?</span>
-        <input type="checkbox" [(ngModel)]="responsavel.principal" />
-      </div>
-  
-      <div class="upload">
-        <label class="btn-upload">
-          <i class="bi bi-upload"></i> Adicionar foto
-          <input type="file" hidden (change)="onFotoResponsavelSelecionada($event)" />
-        </label>
-  
-        <img *ngIf="previewFotoResponsavel" [src]="previewFotoResponsavel" />
 
+      <!-- Lista de Novos Responsáveis -->
+      <div class="responsaveis-lista">
+        <h5>Novos Responsáveis <span style="font-weight: 400; font-size: 13px; color: var(--cor-53);">(Opcional)</span></h5>
+        
+        <div class="responsavel-item" *ngFor="let resp of aluno.novosResponsaveis; let respIndex = index">
+          <div class="responsavel-form">
+            
+            <div class="form-group">
+              <label>Nome Completo *</label>
+              <input type="text" [(ngModel)]="resp.nome" placeholder="Nome do responsável" />
+            </div>
+
+            <div class="form-group">
+              <label>CPF *</label>
+              <input
+                type="text"
+                maxlength="14"
+                [(ngModel)]="resp.cpf"
+                (input)="formatarCPF($event, alunoIndex, respIndex)"
+                placeholder="000.000.000-00"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Telefone *</label>
+              <input
+                type="text"
+                [(ngModel)]="resp.numero"
+                (input)="formatarTelefone($event, alunoIndex, respIndex)"
+                placeholder="(00) 00000-0000"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Tipo de Vínculo *</label>
+              <input
+                type="text"
+                [(ngModel)]="resp.tipoVinculo"
+                placeholder="Ex: Mãe, Pai, Avó, Tio"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Foto do Responsável</label>
+              <div class="upload-foto">
+                <label class="btn-upload-foto">
+                  <i class="bi bi-camera"></i> Selecionar Foto
+                  <input 
+                    type="file" 
+                    hidden 
+                    accept="image/*"
+                    (change)="onFotoResponsavelSelecionada($event, alunoIndex, respIndex)"
+                  />
+                </label>
+                <div class="preview-foto" *ngIf="resp.foto">
+                  <img [src]="getPreviewUrl(resp.foto)" alt="Preview" />
+                  <button 
+                    class="btn-remover-foto" 
+                    (click)="removerFoto(alunoIndex, respIndex)"
+                    type="button"
+                  >
+                    <i class="bi bi-x"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <button 
+              class="btn-remover" 
+              (click)="removerResponsavel(alunoIndex, respIndex)"
+              type="button"
+            >
+              <i class="bi bi-trash"></i> Remover
+            </button>
+          </div>
+        </div>
+
+        <!-- Botão para adicionar responsável -->
+        <button 
+          class="btn-adicionar-responsavel" 
+          (click)="adicionarResponsavel(alunoIndex)"
+          type="button"
+        >
+          <i class="bi bi-plus-circle"></i> Adicionar Responsável
+        </button>
       </div>
+
     </div>
-  
-  </section>
-  
-  <button class="btn-final" (click)="salvarResponsavel()">
-    Cadastrar Responsável
+  </div>
+
+</section>
+
+<!-- Botões de ação -->
+<div class="acoes-footer" *ngIf="!endForm">
+  <button class="btn-voltar" (click)="voltar()" [disabled]="carregando">
+    Voltar
   </button>
-  
+  <button 
+    class="btn-final" 
+    (click)="enviarFormulario()"
+    [disabled]="carregando"
+  >
+    <span *ngIf="!carregando">Salvar Alterações</span>
+    <span *ngIf="carregando">Enviando...</span>
+  </button>
+</div>
