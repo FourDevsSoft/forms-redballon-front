@@ -9,10 +9,10 @@ import { ApiAlunosComResponsaveisResponse } from '../../../shared/models/aluno.m
   providedIn: 'root'
 })
 export class TurmaService {
-  private apiUrl: string;
+  constructor(private globalService: GlobalService, private http: HttpClient) {}
 
-  constructor(private globalService: GlobalService, private http: HttpClient) {
-    this.apiUrl = `${this.globalService.apiUrl}/turmas`;
+  private get apiUrl(): string {
+    return `${this.globalService.apiUrl}/turmas`;
   }
 
   listar(pagina: number = 1, itensPorPagina: number = 10): Observable<ApiResponseTurma> {

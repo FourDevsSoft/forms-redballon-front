@@ -8,16 +8,17 @@ import { GlobalService } from '../global.service';
   providedIn: 'root'
 })
 export class AlunoService {
-
-  private apiUrl: string;
-  private apiBase: string;
-
   constructor(
     private globalService: GlobalService,
     private http: HttpClient
-  ) {
-    this.apiBase = this.globalService.apiUrl;
-    this.apiUrl = `${this.apiBase}/aluno`;
+  ) {}
+
+  private get apiBase(): string {
+    return this.globalService.apiUrl;
+  }
+
+  private get apiUrl(): string {
+    return `${this.apiBase}/aluno`;
   }
 
   /* ==============================

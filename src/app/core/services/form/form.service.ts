@@ -10,14 +10,14 @@ import { AlunoParaEnvio } from '../../../shared/models/aluno.model';
   providedIn: 'root'
 })
 export class FormService {
-  private apiUrl: string;
-  
   // Armazena dados do check-principal
   private checkPrincipalData = new BehaviorSubject<CheckPrincipalResponse | null>(null);
   public checkPrincipalData$ = this.checkPrincipalData.asObservable();
 
-  constructor(private globalService: GlobalService, private http: HttpClient) {
-    this.apiUrl = `${this.globalService.apiUrl}/aluno`;
+  constructor(private globalService: GlobalService, private http: HttpClient) {}
+
+  private get apiUrl(): string {
+    return `${this.globalService.apiUrl}/aluno`;
   }
 
   checkPrincipal(params: { cpf: string; recaptchaToken: string }): Observable<any> {
