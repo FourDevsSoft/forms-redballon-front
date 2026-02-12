@@ -40,7 +40,7 @@ export class TelaInicialComponent {
   }
 
   irParaCadastroAluno() {
-    this.router.navigate(['/form']);
+    this.router.navigate(['/cadastro']);
   }
 
   irParaCadastroResponsavel() {
@@ -107,7 +107,7 @@ export class TelaInicialComponent {
             this.formService.setCheckPrincipalData(response);
             
             // Sucesso: navega para a página de novo responsável
-            this.router.navigate(['/novo-responsavel']);
+            this.router.navigate(['/edicao']);
           },
           error: (error) => {
             this.carregando = false;
